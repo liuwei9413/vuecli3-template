@@ -1,5 +1,8 @@
 # innovation-lab
 
+## Description
+Background management platform for innovation lab
+
 ## Project setup
 ```
 npm install
