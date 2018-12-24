@@ -1,5 +1,10 @@
 <template>
   <div class="list-wrap">
+    <div class="search-wrap mb20 w400">
+      <el-input placeholder="用户id、邮箱或昵称" v-model="searchModel" class="input-with-select">
+        <el-button slot="append" icon="el-icon-search"></el-button>
+      </el-input>
+    </div>
     <div class="table-wrap" v-loading="loading">
       <el-table
         :data="tableData"
@@ -51,7 +56,7 @@
           label="操作">
           <template slot-scope="scope">
             <el-button
-              @click.native.prevent="editItem(scope.row.id)"
+              @click.native.prevent="sealNumber(scope.row.id)"
               type="text">
               封号
             </el-button>
@@ -59,7 +64,7 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="pagination-wrap" v-if="tableDataLength > 0">
+    <div class="pagination-wrap" v-if="total > 0">
       <el-pagination
         @current-change="handleCurrentChange"
         :current-page.sync="currentPage"
@@ -80,10 +85,10 @@ export default {
   data () {
     return {
       tableData: [],
-      tableDataLength: 0,
       currentPage: 1,
-      pageSize: 20,
+      pageSize: 10,
       total: 0,
+      searchModel: '',
       loading: false
     }
   },
@@ -104,7 +109,7 @@ export default {
           console.log(res)
           this.loading = false
           this.tableData = res.data.list
-          this.total = res.data.count
+          this.total = res.data.total
         })
         .catch(error => {
           this.loading = false
@@ -121,7 +126,7 @@ export default {
       this.platformTypeCheckList = checkList
       this.getList()
     },
-    editItem (id) {
+    sealNumber (id) {
       this.$router.push({ path: `/versions/edit?id=${id}` })
     }
   }

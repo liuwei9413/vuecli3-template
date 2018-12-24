@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form class="login-form" :model="signin" :rules="rules" ref="signin">
       <div class="title-container">
-        <h3 class="title">VeChainThor Wallet 管理平台</h3>
+        <h3 class="title">Innovation Lab 管理平台</h3>
       </div>
       <el-form-item prop="username">
         <el-input v-model="signin.username" placeholder="请输入用户名"></el-input>
@@ -19,7 +19,7 @@
 
 <script>
 import { setStorage } from '@/util'
-// import { login } from '@/service'
+import { login } from '@/service'
 
 export default {
   name: 'Login',
@@ -51,18 +51,16 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           this.loading = true
-          setStorage('username', 'test')
-          this.$router.push({ path: '/' })
-          // login(this.signin)
-          //   .then(() => {
-          //     this.loading = false
-          //     setStorage('username', this.signin.username)
-          //     this.$router.push({ path: '/' })
-          //   })
-          //   .catch((error) => {
-          //     this.loading = false
-          //     console.log(error)
-          //   })
+          login(this.signin)
+            .then((res) => {
+              this.loading = false
+              setStorage('userInfo', res)
+              this.$router.push({ path: '/' })
+            })
+            .catch((error) => {
+              this.loading = false
+              console.log(error)
+            })
         } else {
           console.log('error submit!!')
           return false

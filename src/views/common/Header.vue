@@ -2,14 +2,23 @@
   <header class="clearfix">
     <div class="title">innovation lab</div>
     <div class="welcome">
-      <span>欢迎管理员</span>
+      <el-dropdown trigger="click">
+        <span class="el-dropdown-link">
+          {{username}}
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>
+            <router-link to="/user/manager/changepass" style="text-decoration: none; color: #606266;">修改密码</router-link>
+          </el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
       <span class="logout" @click="logout" v-loading.fullscreen.lock="loading">退出</span>
     </div>   
   </header>
 </template>
 
 <script>
-import { removeStorage } from '@/util'
+import { removeStorage, getStorage } from '@/util'
 import { logout } from '@/service'
 
 export default {
@@ -18,7 +27,8 @@ export default {
   },
   data () {
     return {
-      loading: false
+      loading: false,
+      username: getStorage('userInfo').username
     }
   },
   created () {
@@ -31,7 +41,7 @@ export default {
       logout()
         .then(() => {
           this.loading = false
-          removeStorage('username')
+          removeStorage('userInfo')
           this.$router.push({ path: '/login' })
         })
         .catch((error) => {
@@ -71,6 +81,13 @@ header {
     }
     .logout {
       cursor: pointer;
+    }
+    .el-dropdown {
+      margin-right: 10px;
+      color: #FFF;
+      .el-dropdown-link {
+        cursor: pointer;
+      }
     }
   }
 }

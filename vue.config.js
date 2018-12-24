@@ -9,10 +9,10 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: '<url>',
+        target: 'http://192.168.10.47:3000',
+        changeOrigin: true,
         // ws: true,
-        changeOrigin: true
-      },
+      }
     },
     overlay: {
       warnings: true,

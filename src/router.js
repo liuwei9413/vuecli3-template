@@ -46,16 +46,24 @@ const userRoutes = {
       meta: { title: '用户管理' }
     },
     {
-      name: 'userAdd',
-      path: '/user/add',
-      component: resolve => require(['@/views/user/Add'], resolve),
-      meta: { title: '新增后台用户' }
+      name: 'userManager',
+      path: '/user/manager',
+      component: resolve => require(['@/views/user/Manager'], resolve),
+      meta: { title: '后台用户管理' }
     },
     {
-      name: 'userReset',
-      path: '/user/reset',
-      component: resolve => require(['@/views/user/Reset'], resolve),
-      meta: { title: '重置登录密码' }
+      name: 'userAdd',
+      path: '/user/manager/add',
+      component: resolve => require(['@/views/user/Add'], resolve),
+      meta: { title: '新增后台用户' },
+      hidden: true
+    },
+    {
+      name: 'userChangepass',
+      path: '/user/manager/changepass',
+      component: resolve => require(['@/views/user/ChangePass'], resolve),
+      meta: { title: '修改密码' },
+      hidden: true
     }
   ]
 }
@@ -97,8 +105,8 @@ const homeRoutes = [
     redirect: redirect,
     component: resolve => require(['@/views/Home'], resolve),
     beforeEnter: (to, from, next) => {
-      let username = getStorage('username')
-      if (username) {
+      let userInfo = getStorage('userInfo')
+      if (userInfo) {
         next()
       } else {
         next({ path: '/login' })
@@ -114,8 +122,8 @@ const loginRoutes = [
     path: '/login',
     component: resolve => require(['@/views/Login'], resolve),
     beforeEnter: (to, from, next) => {
-      let username = getStorage('username')
-      if (username) {
+      let userInfo = getStorage('userInfo')
+      if (userInfo) {
         next({ path: '/' })
       } else {
         next()
