@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
   Vue.prototype.baseURL = 'http://192.168.43.44:8050/'
   axios.defaults.baseURL = ''
 } else {
-  Vue.prototype.baseURL = ''
+  Vue.prototype.baseURL = 'http://192.168.10.47:3000/'
   axios.defaults.baseURL = ''
 }
 

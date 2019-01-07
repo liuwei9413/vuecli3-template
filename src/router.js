@@ -28,6 +28,20 @@ const dappRoutes = {
       path: '/dapp/type',
       component: resolve => require(['@/views/dapp/Type'], resolve),
       meta: { title: 'Dapp类型管理' }
+    },
+    {
+      name: 'addDappType',
+      path: '/dapp/type/add',
+      component: resolve => require(['@/views/dapp/AddType'], resolve),
+      meta: { title: '新增类型' },
+      hidden: true
+    },
+    {
+      name: 'editDappType',
+      path: '/dapp/type/edit',
+      component: resolve => require(['@/views/dapp/AddType'], resolve),
+      meta: { title: '编辑类型' },
+      hidden: true
     }
   ]
 }

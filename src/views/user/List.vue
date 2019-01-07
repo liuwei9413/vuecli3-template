@@ -1,8 +1,11 @@
 <template>
   <div class="list-wrap">
+    <el-breadcrumb class="breadcrumb mb30" separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
+    </el-breadcrumb>
     <div class="search-wrap mb20 w400">
       <el-input placeholder="用户id、邮箱或昵称" v-model="searchModel" class="input-with-select">
-        <el-button slot="append" icon="el-icon-search"></el-button>
+        <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
       </el-input>
     </div>
     <div class="table-wrap" v-loading="loading">
@@ -11,11 +14,11 @@
         style="width: 100%"
         >
         <el-table-column
-          prop="id"
+          prop="username"
           label="用户id">
         </el-table-column>
         <el-table-column
-          prop="name"
+          prop="nickname"
           label="昵称">
         </el-table-column>
         <el-table-column
@@ -23,43 +26,25 @@
           label="注册邮箱">
         </el-table-column>
         <el-table-column
-          prop="date"
-          label="注册时间">
+          label="国家和地区"
+          :formatter="countryAndCity">
         </el-table-column>
         <el-table-column
-          prop="size"
-          label="国家和地区">
-        </el-table-column>
-        <el-table-column
-          prop="isDeveloper"
-          label="是否是开发者"
-          width="120"
-          :formatter="isDeveloper">
-        </el-table-column>
-        <el-table-column
-          prop="invitations"
+          prop="postCount"
           label="发帖总数">
         </el-table-column>
         <el-table-column
-          prop="dapps"
+          prop="appCount"
           label="提交应用数">
         </el-table-column>
         <el-table-column
-          prop="docs"
-          label="提交文档数">
-        </el-table-column>
-        <el-table-column
-          prop="templates"
-          label="提交模板数">
+          label="状态"
+          :formatter="accountStatus">
         </el-table-column>
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button
-              @click.native.prevent="sealNumber(scope.row.id)"
-              type="text">
-              封号
-            </el-button>
+            <el-button v-show="scope.row.disabled === 'N'" @click.native.prevent="handleDeletePopup(scope.row.id)" type="primary" size="small">封号</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -67,8 +52,8 @@
     <div class="pagination-wrap" v-if="total > 0">
       <el-pagination
         @current-change="handleCurrentChange"
-        :current-page.sync="currentPage"
-        :page-size="pageSize"
+        :current-page.sync="page"
+        :page-size="size"
         layout="total, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
@@ -77,7 +62,10 @@
 </template>
 
 <script>
-import { getAccountList } from '@/service.js'
+import {
+  getUserAccountList,
+  deleteUserAccount
+} from '@/service.js'
 
 export default {
   components: {
@@ -85,8 +73,8 @@ export default {
   data () {
     return {
       tableData: [],
-      currentPage: 1,
-      pageSize: 10,
+      page: 1,
+      size: 10,
       total: 0,
       searchModel: '',
       loading: false
@@ -100,34 +88,66 @@ export default {
   methods: {
     getList () {
       const params = {
-        currentPage: this.currentPage,
-        pageSize: this.pageSize
+        page: this.page,
+        size: this.size,
+        search: this.searchModel
       }
       this.loading = true
-      getAccountList(params)
+      getUserAccountList(params)
         .then(res => {
-          console.log(res)
-          this.loading = false
-          this.tableData = res.data.list
-          this.total = res.data.total
+          this.loading = 
+          this.searchModel = ''
+          this.tableData = res.list
+          this.total = res.count
         })
-        .catch(error => {
+        .catch(() => {
+          this.searchModel = ''
           this.loading = false
-          console.log(error)
         })
     },
-    isDeveloper (row) {
-      return row.isDeveloper ? '是' : '否'
+    handleSearch () {
+      this.page = 1
+      this.size = 10
+      this.getList()
+    },
+    accountStatus (row) {
+      return row.disabled === 'Y' ? '已封号' : '正常'
+    },
+    countryAndCity (row) {
+      return `${row.state}/${row.province}`
     },
     handleCurrentChange () {
       this.getList()
     },
-    platformChange (checkList) {
-      this.platformTypeCheckList = checkList
-      this.getList()
+    handleDeletePopup (id) {
+      this.deleteId = id
+      this.$confirm('封号操作将导致该用户无法使用innovationLab，但不会注销该用户，是否继续操作？', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.handleDelete()
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消'
+          });          
+        });
     },
-    sealNumber (id) {
-      this.$router.push({ path: `/versions/edit?id=${id}` })
+    handleDelete () {
+      const params = {
+        id: this.deleteId
+      }
+      deleteUserAccount(params)
+        .then(() => {
+          this.$message({
+            type: 'success',
+            message: '封号成功!'
+          });
+          this.getList()
+        })
+        .catch(() => {
+        })
     }
   }
 }
@@ -135,37 +155,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.list-wrap {
-  .form-wrap {
-    margin-bottom: 16px;
-    .filter-wrap {
-      float: left;
-      .item {
-        margin-bottom: 20px;
-        .label {
-          display: inline-block;
-          margin-right: 30px;
-          width: 100px;
-          text-align: right;
-        }
-        .value {
-          display: inline-block;
-        }
-      }
-    }
-    .add-btn {
-      float: right;
-    }
-  }
-  .table-wrap {
-    margin-bottom: 30px;
-  }
-  .pagination-wrap {
-    .el-pagination {
-      text-align: center;
-    }
-  }
-}
 </style>
 <style lang="scss">
 .description {

@@ -1,6 +1,9 @@
 <template>
-  <div class="list-wrap">
-    <div class="list-head mb20 clearfix">
+  <div class="manager-list">
+    <el-breadcrumb class="breadcrumb mb30" separator-class="el-icon-arrow-right">
+      <el-breadcrumb-item>后台用户管理</el-breadcrumb-item>
+    </el-breadcrumb>
+    <div class="clearfix">
       <p class="title fl font18">后台用户列表</p>  
       <router-link to="/user/manager/add" v-if="adminLevel === 0">
         <el-button class="fr" type="primary" size="small">
@@ -8,7 +11,7 @@
         </el-button>
       </router-link>
     </div>
-    <div class="table-wrap" v-loading="loading">
+    <div class="table-wrap mb30" v-loading="loading">
       <el-table
         :data="tableData"
         style="width: 100%"
@@ -37,7 +40,7 @@
       </el-table>
     </div>
     <div class="pagination-wrap" v-if="total > 0">
-      <el-pagination
+      <el-pagination class="text-center"
         @current-change="handleCurrentChange"
         :current-page.sync="page"
         :page-size="size"
@@ -140,22 +143,4 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.list-wrap {
-  margin-top: 30px;
-  .table-wrap {
-    margin-bottom: 30px;
-  }
-  .pagination-wrap {
-    .el-pagination {
-      text-align: center;
-    }
-  }
-}
-</style>
-<style lang="scss">
-.description {
-  p {
-    margin: 0;
-  }
-}
 </style>

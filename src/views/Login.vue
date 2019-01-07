@@ -54,6 +54,7 @@ export default {
           login(this.signin)
             .then((res) => {
               this.loading = false
+              // console.log(res)
               setStorage('userInfo', res)
               this.$router.push({ path: '/' })
             })

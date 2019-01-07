@@ -1,7 +1,7 @@
 <template>
   <section class="sidebar">
     <el-menu router unique-opened :default-active="activeIndex" @select="handleSelect">
-      <el-submenu :index="item.name" v-for="(item, index) in homeRoutes" :key="index">
+      <el-submenu :index="item.path" v-for="(item, index) in homeRoutes" :key="index">
         <template slot="title">
           <span>{{item.meta.title}}</span>
         </template>

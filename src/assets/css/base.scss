@@ -3,6 +3,8 @@ body {
   color: #222222;
 }
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -30,19 +32,65 @@ body {
   font-size: 18px;
 }
 
+.mb10 {
+  margin-bottom: 10px;
+}
+
 .mb20 {
   margin-bottom: 20px;
+}
+
+.mb30 {
+  margin-bottom: 30px;
 }
 
 .mb40 {
   margin-bottom: 40px;
 }
 
+.mt30 {
+  margin-top: 30px;
+}
+
 .w400 {
   width: 400px;
+}
+
+.text-center {
+  text-align: center;
 }
 
 .form-box {
   margin: 50px 0 0 50px;
   width: 600px;
+}
+
+.breadcrumb {
+  line-height: 30px;
+  font-size: 14px;
+}
+
+/* 图片上传 */
+.avatar-uploader .el-upload {
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
 }
