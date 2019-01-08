@@ -1,0 +1,11 @@
+---
+- name: deploy static website
+  hosts: "{{env}}"
+  remote_user: "vechain"
+  tasks:
+    - name: "复制打包后的dist内容到远程目录——dev环境"
+      copy:
+        src: ../dist/
+        dest: "{{dest}}"
+        force: true
+      become: yes

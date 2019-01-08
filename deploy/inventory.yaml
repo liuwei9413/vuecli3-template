@@ -1,0 +1,16 @@
+---
+dev:
+  hosts:
+    ecs-ali-sh-dev-02-innovation-lab-frontier:
+      ansible_ssh_host: ecs-ali-sh-dev-02
+      ansible_ssh_port: 56000
+test:
+  hosts:
+    thor-ali-hk-exp-web-01:
+      ansible_ssh_host: thor-ali-hk-exp-web-01
+      ansible_ssh_port: 56000
+production:
+  hosts:
+    thor-ali-hk-exp-web-01:
+      ansible_ssh_host: thor-ali-hk-exp-web-01
+      ansible_ssh_port: 56000
