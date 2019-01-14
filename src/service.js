@@ -19,7 +19,7 @@ export const getUserAccountList = function (params) {
 
 export const deleteUserAccount = function (params) {
   let url = `/api/v1/accounts/${params.id}/disabled`
-  return fetch(url, 'post', { disabled: "Y" })
+  return fetch(url, 'post', { disabled: params.disabled })
 }
 
 export const getManagerList = function (params) {

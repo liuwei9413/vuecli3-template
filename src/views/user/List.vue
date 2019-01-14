@@ -44,7 +44,7 @@
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button v-show="scope.row.disabled === 'N'" @click.native.prevent="handleDeletePopup(scope.row.id)" type="primary" size="small">封号</el-button>
+            <el-button @click.native.prevent="handleDeletePopup(scope.row.uid, scope.row.disabled)" type="primary" size="small">{{ scope.row.disabled === 'Y' ? '启封' : '封号' }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -119,9 +119,11 @@ export default {
     handleCurrentChange () {
       this.getList()
     },
-    handleDeletePopup (id) {
+    handleDeletePopup (id, disabled) {
       this.deleteId = id
-      this.$confirm('封号操作将导致该用户无法使用innovationLab，但不会注销该用户，是否继续操作？', '提示', {
+      this.disabled = disabled === 'Y' ? 'N' : 'Y'
+      if (disabled === 'N') {
+        this.$confirm('封号操作将导致该用户无法使用innovationLab，但不会注销该用户，是否继续操作？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
@@ -133,16 +135,36 @@ export default {
             message: '已取消'
           });          
         });
+      } else {
+        this.handleRecover()
+      }   
     },
     handleDelete () {
       const params = {
-        id: this.deleteId
+        id: this.deleteId,
+        disabled: this.disabled
       }
       deleteUserAccount(params)
         .then(() => {
           this.$message({
             type: 'success',
             message: '封号成功!'
+          });
+          this.getList()
+        })
+        .catch(() => {
+        })
+    },
+    handleRecover () {
+      const params = {
+        id: this.deleteId,
+        disabled: this.disabled
+      }
+      deleteUserAccount(params)
+        .then(() => {
+          this.$message({
+            type: 'success',
+            message: '已恢复!'
           });
           this.getList()
         })

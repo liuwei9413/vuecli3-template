@@ -13,6 +13,7 @@ if (process.env.NODE_ENV === 'production') {
   axios.defaults.baseURL = 'https://innovation-manage-dev.vechaindev.com/'
 } else {
   Vue.prototype.baseURL = 'http://192.168.10.47:3000/'
+  // Vue.prototype.baseURL = 'https://innovation-manage-dev.vechaindev.com/'
   axios.defaults.baseURL = ''
 }
 
