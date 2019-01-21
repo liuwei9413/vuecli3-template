@@ -9,8 +9,8 @@ axios.defaults.withCredentials = true
 
 // 动态配置接口域名
 if (process.env.NODE_ENV === 'production') {
-  Vue.prototype.baseURL = 'https://innovation-manage-test.vechaindev.com/'
-  axios.defaults.baseURL = 'https://innovation-manage-test.vechaindev.com/'
+  Vue.prototype.baseURL = 'https://innovation-manage-dev.vechaindev.com/'
+  axios.defaults.baseURL = 'https://innovation-manage-dev.vechaindev.com/'
 } else {
   Vue.prototype.baseURL = 'http://192.168.10.47:3000/'
   // Vue.prototype.baseURL = 'https://innovation-manage-dev.vechaindev.com/'
