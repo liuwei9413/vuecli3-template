@@ -50,7 +50,7 @@ export default {
       signin: {
         nameCn: '',
         nameEn: '',
-        imageUrl: '',
+        imageUrl: 'http://innovation-vc.oss-cn-shanghai.aliyuncs.com/un0sgmQ4TLD0G3YkL5iw9ig8.png',
         author: getStorage('userInfo').username,
         date: dateFormat(+ new Date() / 1000, 'yyyy-MM-dd')
       },

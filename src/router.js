@@ -18,6 +18,20 @@ const dappRoutes = {
       meta: { title: 'Dapp审核' }
     },
     {
+      name: 'dappCheckDetail',
+      path: '/dapp/check/detail',
+      component: resolve => require(['@/views/dapp/CheckDetail'], resolve),
+      meta: { title: 'Dapp审核详情' },
+      hidden: true      
+    },
+    {
+      name: 'dappCheckHistory',
+      path: '/dapp/check/history',
+      component: resolve => require(['@/views/dapp/CheckHistory'], resolve),
+      meta: { title: '历史审核记录' },
+      hidden: true      
+    },
+    {
       name: 'dappList',
       path: '/dapp/list',
       component: resolve => require(['@/views/dapp/List'], resolve),

@@ -1,11 +1,16 @@
 body {
   font-size: 14px;
+  font-family: 'PingFangSC','helvetica neue','hiragino sans gb','arial','microsoft yahei ui','microsoft yahei','simsun','sans-serif';
   color: #222222;
 }
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
 }
 
 .clearfix:after {
@@ -46,6 +51,10 @@ body {
 
 .mb40 {
   margin-bottom: 40px;
+}
+
+.mb200 {
+  margin-bottom: 200px;
 }
 
 .mt30 {

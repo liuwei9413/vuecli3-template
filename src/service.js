@@ -92,42 +92,32 @@ export const addBanner = function (params) {
   return fetch(url, 'post', params)
 }
 
-// export const getAccountList = function (params) {
-//   let url = `/versions?page=${params.currentPage - 1}&size=${params.pageSize}`
-//   if (params.order !== '') {
-//     url += `&order=${params.order}`
-//   }
-//   console.log(url, params)
-//   return fetch('/json/accountList.json', 'get')
-//   // return fetch(url, 'get')
-// }
-
-export const getVersionsList = function (params) {
-  let url = `/versions?page=${params.currentPage - 1}&page_size=${params.pageSize}`
-  if (params.order !== '') {
-    url += `&order=${params.order}`
-  }
-  if (params.update !== '') {
-    url += `&update=${params.update}`
-  }
-  if (params.platform !== '') {
-    url += `&platform=${params.platform}`
-  }
+export const getAuditDappList = function (params) {
+  let url = `/api/v1/audits?page=${params.page}&size=${params.size}`
   return fetch(url, 'get')
 }
 
-export const getLatestVersionInfo = function () {
-  return fetch('/versions/latest', 'get')
+export const getAuditDappListHistory = function (params) {
+  let url = `/api/v1/dapplogs?page=${params.page}&size=${params.size}`
+  return fetch(url, 'get')
 }
 
-export const addVersion = function (params) {
-  return fetch('/versions', 'post', params)
+export const getAuditDappDetail = function (params) {
+  let url = `/api/v1/audits/${params.id}`
+  return fetch(url, 'get')
 }
 
-export const getVersionInfo = function (id) {
-  return fetch(`/versions/${id}`, 'get')
+export const getAuditDappDetailForLast = function (params) {
+  let url = `/api/v1/dapplogs/${params.appId}`
+  return fetch(url, 'get')
 }
 
-export const editVersion = function (params) {
-  return fetch(`/versions/${params.id}`, 'post', params)
+export const auditDapp = function (urlParams, params) {
+  let url = `/api/v1/audits/${urlParams.id}/status`
+  return fetch(url, 'post', params)
+}
+
+export const getAuditDappHistory = function (params) {
+  let url = `/api/v1/dapplogs/${params.appId}`
+  return fetch(url, 'get')
 }
