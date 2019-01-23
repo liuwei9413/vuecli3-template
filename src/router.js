@@ -56,6 +56,12 @@ const dappRoutes = {
       component: resolve => require(['@/views/dapp/AddType'], resolve),
       meta: { title: '编辑类型' },
       hidden: true
+    },
+    {
+      name: 'recommendDapp',
+      path: '/dapp/recommend',
+      component: resolve => require(['@/views/dapp/Recommend'], resolve),
+      meta: { title: 'Dapp推荐配置' },
     }
   ]
 }

@@ -72,6 +72,26 @@ export const editDappType = function (urlParams, params) {
   return fetch(url, 'post', params)
 }
 
+export const searchDappUnrecommendList = function (params) {
+  let url = `/api/v1/dapp-unrecommends?search=${params.search}`
+  return fetch(url, 'get')
+}
+
+export const getRecommendDappList = function () {
+  let url = `/api/v1/dapp-recommends`
+  return fetch(url, 'get')
+}
+
+export const recommendDapp = function (params) {
+  let url = `/api/v1/dapp-recommends`
+  return fetch(url, 'post', params)
+}
+
+export const sortRecommendDappList = function (params) {
+  let url = `/api/v1/dapp-recommends/total/index`
+  return fetch(url, 'post', params)
+}
+
 export const getBannerList = function () {
   let url = `/api/v1/banners`
   return fetch(url, 'get')

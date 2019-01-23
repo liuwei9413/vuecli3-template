@@ -4,11 +4,11 @@
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="search-wrap mb20 w400">
-      <el-input placeholder="用户id、邮箱或昵称" v-model="searchModel" class="input-with-select">
+      <el-input placeholder="用户id、邮箱或昵称" v-model="searchModel">
         <el-button slot="append" icon="el-icon-search" @click="handleSearch"></el-button>
       </el-input>
     </div>
-    <div class="table-wrap" v-loading="loading">
+    <div class="table-wrap mb30" v-loading="loading">
       <el-table
         :data="tableData"
         style="width: 100%"
@@ -50,7 +50,7 @@
       </el-table>
     </div>
     <div class="pagination-wrap" v-if="total > 0">
-      <el-pagination
+      <el-pagination class="text-center"
         @current-change="handleCurrentChange"
         :current-page.sync="page"
         :page-size="size"
