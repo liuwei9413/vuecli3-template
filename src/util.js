@@ -48,14 +48,10 @@ export const dateFormat = function (timestamp, format, isUtcTime) {
   return format
 }
 
-// export function getToken() {
-//   return Cookies.get(TokenKey)
-// }
-
-// export function setToken(token) {
-//   return Cookies.set(TokenKey, token)
-// }
-
-// export function removeToken() {
-//   return Cookies.remove(TokenKey)
-// }
+export const createNewArrByOneKey = function(arr, key) {
+  let result = []
+  arr.forEach((item) => {
+    result.push(item[key])
+  })
+  return result
+}

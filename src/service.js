@@ -141,3 +141,19 @@ export const getAuditDappHistory = function (params) {
   let url = `/api/v1/dapplogs/${params.appId}`
   return fetch(url, 'get')
 }
+
+export const getDappList = function (paramsUrl, params) {
+  // let url = `/api/v1/dapps?page=${params.page}&size=${params.size}&statusArr=${params.statusArr}&classifyIDs=${params.classifyIDs}&kycArr=${params.kycArr}&recommendArr=${params.recommendArr}`
+  let url = `/api/v1/dapps?page=${paramsUrl.page}&size=${paramsUrl.size}`
+  return fetch(url, 'post', params)
+}
+
+export const disabledDapp = function (paramsUrl, params) {
+  let url = `/api/v1/dapps/${paramsUrl.appId}/disabled`
+  return fetch(url, 'post', params)
+}
+
+export const getDappDetail = function (params) {
+  let url = `/api/v1/dapps/${params.appId}`
+  return fetch(url, 'get', params)
+}
