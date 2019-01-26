@@ -312,14 +312,19 @@ export default {
     .list-item {
       flex: 1;
       padding: 10px;
-      background: #f2f2f2;
       .title {
-        margin-bottom: 20px;
+        margin-bottom: 40px;
         font-size: 16px;
         line-height: 30px;
+        border-bottom: 2px solid #222;
+        padding-bottom: 10px;
       }
       .item {
-        margin-bottom: 30px;
+        margin-bottom: 30px;    
+        border-bottom: 1px solid #f2f2f2;
+        padding: 10px;
+        background-color: #f9f9f9;
+        border-radius: 4px;
         .label {
           margin-bottom: 10px;
           line-height: 30px;
