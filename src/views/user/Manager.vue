@@ -34,7 +34,7 @@
           label="操作">
           <template slot-scope="scope">
             <el-button v-show="scope.row.disabled === 'N'" @click.native.prevent="resetPassword(scope.row.uid, scope.row.adminLevel)" type="primary" size="small">重置密码</el-button>
-            <el-button @click.native.prevent="changeStatus(scope.row.uid, scope.row.disabled)" type="primary" size="small">{{ scope.row.disabled === 'Y' ? '恢复' : '禁用' }}</el-button>
+            <el-button v-show="scope.row.uid !== activeUid" @click.native.prevent="changeStatus(scope.row.uid, scope.row.disabled)" type="primary" size="small">{{ scope.row.disabled === 'Y' ? '恢复' : '禁用' }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,6 +68,7 @@ export default {
       disabledLoading: false,
       resetLoading: false,
       adminLevel: getStorage('userInfo').adminLevel,
+      activeUid: getStorage('userInfo').uid,
       page: 1,
       size: 10,
       total: 0,
@@ -109,7 +110,7 @@ export default {
         .then(() => {
           this.resetLoading = false
           this.$message({
-            message: '密码重置成功',
+            message: '密码重置成功，默认初始密码为：123456',
             type: 'success'
           });
         })
