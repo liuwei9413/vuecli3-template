@@ -131,8 +131,7 @@ const activityRoutes = {
   ]
 }
 
-// 权限设置 => 目前默认为版本管理
-const redirect = '/user/list'
+const redirect = '/dapp/check'
 const children = [
   dappRoutes,
   userRoutes,

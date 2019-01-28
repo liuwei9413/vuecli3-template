@@ -114,7 +114,15 @@ export default {
       return row.disabled === 'Y' ? '已封号' : '正常'
     },
     countryAndCity (row) {
-      return `${row.state}/${row.province}`
+      if (!row.state) {
+        return ''
+      } else {
+        if (!row.province) {
+          return `${row.state.split('-')[1]}`
+        } else {
+          return `${row.state.split('-')[1]} / ${row.province.split('-')[1]}`
+        }
+      }
     },
     handleCurrentChange () {
       this.getList()

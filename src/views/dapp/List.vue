@@ -93,7 +93,7 @@
 import { createNewArrByOneKey } from '@/util'
 import { dateFormat } from '@/util'
 import { 
-  // getDappList,
+  getDappList,
   getDappTypeList,
   disabledDapp,
 } from '@/service.js'
@@ -183,74 +183,24 @@ export default {
   },
   methods: {
     getListData () {
-      // const params = {
-      //   page: this.page,
-      //   size: this.size,
-      //   statusArr: this.statusArrModel,
-      //   kycArr: this.kycArrModel,
-      //   recommendArr: this.recommendArrModel,
-      //   classifyIDs: this.classifyIDsModel,
-      // }
-      // this.loading = true
-      // getDappList(params)
-      // const paramsUrl = {
-      //   page: this.page,
-      //   size: this.size,
-      // }
+      this.loading = true
       const params = {
-        statusArr: this.checkedForStatus,
-        kycArr: this.checkedForKyc,
-        recommendArr: this.checkedForRecommend,
+        page: this.page,
+        size: this.size,
+        statusArr: JSON.stringify(this.checkedForStatus),
+        kycArr: JSON.stringify(this.checkedForKyc),
+        recommendArr: JSON.stringify(this.checkedForRecommend),
+        classifyIDs: JSON.stringify(this.classifyIDsModel),
       }
-      console.log(params)
-      const res = {
-        "list": [
-            {
-                "id": 10002,
-                "appID": "a8a57e0e83cb",
-                "logo": "http://toolchain-dev.oss-cn-shanghai.aliyuncs.com/GQKIzT1DppplNBrmF3GYmZZr.png",
-                "version": "V0.0.1",
-                "type": "DEV",
-                "createTime": 1546934991920,
-                "name": "名称3",
-                "status": 0,   //0:上架，1:下架
-                "disabled": "N",            //Y:禁用
-                "account": "terry",
-                "vevidStatus": "UNPASS",
-                "recommend": 2,         //1:推荐,2:未推荐
-                "classifies": "测试"
-            },
-            {
-                "id": 10001,
-                "appID": "266b8d9bf25d",
-                "logo": "http://toolchain-dev.oss-cn-shanghai.aliyuncs.com/GQKIzT1DppplNBrmF3GYmZZr.png",
-                "version": "V0.0.1",
-                "type": "DEV",
-                "createTime": 1546923626861,
-                "name": "名称1",
-                "status": 0,
-                "disabled": "N",
-                "account": "terry",
-                "vevidStatus": "UNPASS",
-                "recommend": 1,
-                "classifies": "测试"
-            }
-        ],
-        "count": 2
-      }
-
-      this.tableData = res.list
-      this.total = res.total
-      // this.loading = true
-      // getDappList(paramsUrl, params)
-      //   .then(res => {
-      //     this.loading = false
-      //     this.tableData = res.list
-      //     this.total = res.count
-      //   })
-      //   .catch(() => {
-      //     this.loading = false
-      //   })
+      getDappList(params)
+        .then(res => {
+          this.loading = false
+          this.tableData = res.list
+          this.total = res.count
+        })
+        .catch(() => {
+          this.loading = false
+        })
     },
     isKYC (row) {
       return row.vevidStatus === 'UNPASS' ? '否' : '是'
@@ -308,7 +258,7 @@ export default {
       this.getListData()
     },
     handleCurrentChange () {
-      this.getList()
+      this.getListData()
     },
     changeStatusPopup (appId, disabled) {
       if (disabled === 'N') {
@@ -326,7 +276,7 @@ export default {
     changeStatus (appId, disabled) {
       const disabledDeal = disabled === 'Y' ? 'N' : 'Y'
       const paramsUrl = {
-        addId: appId
+        appId: appId
       }
       const params = {
         disabled: disabledDeal
@@ -339,7 +289,7 @@ export default {
             message: `${disabledDeal === 'Y' ? '已禁用' : '解禁成功'}`,
             type: 'success'
           });
-          this.getList()
+          this.getListData()
         })
         .catch(() => {
           this.disabledLoading = false
