@@ -18,6 +18,7 @@
           :before-upload="beforeAvatarUpload">
           <img v-if="signin.pic" :src="signin.pic" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <div slot="tip" class="el-upload__tip">支持扩展名：.png .jpg.&nbsp;&nbsp;&nbsp;&nbsp;尺寸：1680*458&nbsp;&nbsp;&nbsp;&nbsp;大小1-5M</div>
         </el-upload>
       </el-form-item>
       <el-form-item label="跳转链接：" prop="url">
@@ -65,13 +66,13 @@ export default {
   methods: {
     beforeAvatarUpload(file) {
       const isJPG = file.type === 'image/jpeg' || 'image/png';
-      const isLt5M = file.size / 1024 / 1024 < 5;
+      const isLt5M = file.size / 1024 / 1024 >= 1 && file.size / 1024 / 1024 <= 5;
 
       if (!isJPG) {
-        this.$message.error('上传图标图片只能是 JPG、PNG 格式!');
+        this.$message.error('上传图片只能是 JPG、PNG 格式!');
       }
       if (!isLt5M) {
-        this.$message.error('上传图标图片大小不能超过 5MB!');
+        this.$message.error('上传图片大小不能超过 5MB!');
       }
       if (isJPG && isLt5M) {
         this.loadingForUpload = true

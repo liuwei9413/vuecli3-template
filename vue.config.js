@@ -9,8 +9,8 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://192.168.10.47:3000',
-        // target: 'https://innovation-manage-dev.vechaindev.com',
+        // target: 'http://192.168.10.47:3000',
+        target: 'https://innovation-manage-test.vechaindev.com',
         changeOrigin: true,
         // ws: true,
       }
