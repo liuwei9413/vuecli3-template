@@ -1,5 +1,5 @@
 <template>
-  <div class="dapp-list">
+  <div class="dapp-list" v-loading.fullscreen="loading">
     <el-breadcrumb class="breadcrumb mb30" separator-class="el-icon-arrow-right">
       <el-breadcrumb-item>产品列表</el-breadcrumb-item>
     </el-breadcrumb>
@@ -9,6 +9,12 @@
           <el-checkbox :indeterminate="isIndeterminateForStatus" v-model="checkAllModelForStatus" @change="handleCheckAllForStatus">全选</el-checkbox>
           <el-checkbox-group v-model="checkedForStatus" @change="handleCheckedForStatus">
             <el-checkbox v-for="(item, index) in initStatusOptions" :label="item.label" :key="index">{{item.name}}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+        <el-form-item label="产品类型：">
+          <el-checkbox :indeterminate="isIndeterminateForClassify" v-model="checkAllModelForClassify" @change="handleCheckAllForClassify">全选</el-checkbox>
+          <el-checkbox-group v-model="checkedForClassify" @change="handleCheckedForClassify">
+            <el-checkbox v-for="(item, index) in initClassifyOptions" :label="item.label" :key="index">{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="KYC：">
@@ -25,7 +31,7 @@
         </el-form-item>
       </el-form>
     </div>
-    <div class="table-wrap mb30" v-loading="loading">
+    <div class="table-wrap mb30">
       <el-table
         :data="tableData"
         style="width: 100%"
@@ -148,6 +154,11 @@ export default {
       isIndeterminateForStatus: false,
       checkAllModelForStatus: true,
       checkedForStatus: createNewArrByOneKey(statusOptions, 'label'),
+      initClassifyOptions: [],
+      initClassifyModel: [],
+      isIndeterminateForClassify: false,
+      checkAllModelForClassify: true,
+      checkedForClassify: [],
       initKycOptions: kycOptions,
       initKycModel: createNewArrByOneKey(kycOptions, 'label'),
       isIndeterminateForKyc: false,
@@ -172,7 +183,10 @@ export default {
         let dappClassifyListResult = await getDappTypeList()
         this.dappClassifyList = dappClassifyListResult.list
         this.dappClassifyList.forEach((item) => {
-          this.classifyIDsModel.push(item.id)
+          this.initClassifyOptions.push({label: item.id, name: item.name_cn})
+          this.initClassifyModel.push(item.id)
+          this.checkedForClassify.push(item.id)
+          // this.classifyIDsModel.push(item.id)
         })
         this.getListData()
 
@@ -190,7 +204,7 @@ export default {
         statusArr: JSON.stringify(this.checkedForStatus),
         kycArr: JSON.stringify(this.checkedForKyc),
         recommendArr: JSON.stringify(this.checkedForRecommend),
-        classifyIDs: JSON.stringify(this.classifyIDsModel),
+        classifyIDs: JSON.stringify(this.checkedForClassify),
       }
       getDappList(params)
         .then(res => {
@@ -228,6 +242,19 @@ export default {
       let checkedCount = value.length
       this.checkAllModelForStatus = checkedCount === this.initStatusModel.length
       this.isIndeterminateForStatus = checkedCount > 0 && checkedCount < this.initStatusModel.length
+      this.page = 1
+      this.getListData()
+    },
+    handleCheckAllForClassify(val) {
+      this.checkedForClassify = val ? this.initClassifyModel : []
+      this.isIndeterminateForClassify = false
+      this.page = 1
+      this.getListData()
+    },
+    handleCheckedForClassify(value) {
+      let checkedCount = value.length
+      this.checkAllModelForClassify = checkedCount === this.initClassifyModel.length
+      this.isIndeterminateForClassify = checkedCount > 0 && checkedCount < this.initClassifyModel.length
       this.page = 1
       this.getListData()
     },

@@ -139,9 +139,23 @@
       </div>
       <div class="btns">
         <el-button type="primary" @click="handlePassPopup">通过</el-button>
-        <el-button type="primary" @click="handleNoPassPopup">不通过</el-button>
+        <el-button type="primary" @click="dialogFormVisible = true">不通过</el-button>
       </div>
     </div>
+    <el-dialog title="输入不通过的原因" :visible.sync="dialogFormVisible">
+      <el-form :model="auditForm" :rules="rules" ref="auditForm">
+        <el-form-item label="中文原因" label-width="120px" prop="reasonCN">
+          <el-input v-model.trim="auditForm.reasonCN" autocomplete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="英文原因" label-width="120px" prop="reasonEN">
+          <el-input v-model.trim="auditForm.reasonEN" autocomplete="off"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取 消</el-button>
+        <el-button type="primary" @click="handleNoPass">确 定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -169,6 +183,19 @@ export default {
       dappInfoForLastHasShow: false,
       dappInfoForLast: [],
       formatDappClassifyForLast: '',
+      dialogFormVisible: false,
+      auditForm: {
+        reasonCN: '',
+        reasonEN: '',
+      },
+      rules: {
+        reasonCN: [
+          { required: true, message: '请输入中文版原因', trigger: 'blur' }
+        ],
+        reasonEN: [
+          { required: true, message: '请输入英文版原因', trigger: 'blur' }
+        ],
+      },
     }
   },
   computed: {
@@ -219,6 +246,7 @@ export default {
       this.loadingForLast = true
       getAuditDappDetailForLast(params)
         .then(res => {
+          if (!res.data) return
           let dappTypeValue = []
           this.loadingForLast = false
           this.dappInfoForLastHasShow = true
@@ -237,29 +265,29 @@ export default {
           this.loadingForLast = false
         })
     },
-    handleNoPassPopup() {
-      this.$prompt('输入原因', '输入不通过的原因', {
-          confirmButtonText: '确定',
-          cancelButtonText: '取消'
-        }).then(({ value }) => {
-          this.auditsDappStatus = 0
-          this.handleAuditDapp(0, value)
-        }).catch(() => {   
-        });
+    handleNoPass () {
+      let params = {
+        status: 0,
+        reasonCN: this.auditForm.reasonCN,
+        reasonEN: this.auditForm.reasonEN
+      }
+      this.$refs['auditForm'].validate((valid) => {
+        if (valid) {
+          this.handleAuditDapp(params)
+        } else {
+          return false
+        }
+      })
     },
     handlePassPopup() {
       this.$alert('是否确认审核通过？', '提示', {
         confirmButtonText: '确定',
         callback: () => {
-          this.handleAuditDapp(1)
+          this.handleAuditDapp({status: 1})
         }
       })
     },
-    handleAuditDapp(status, reason) {
-      const params = {
-        status: status,
-        reason: !reason ? '' : reason
-      }
+    handleAuditDapp(params) {
       const paramsUrl = {
         id: this.id
       }

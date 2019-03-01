@@ -128,7 +128,7 @@ export const getAuditDappDetail = function (params) {
 }
 
 export const getAuditDappDetailForLast = function (params) {
-  let url = `/api/v1/dapplogs/${params.appId}`
+  let url = `/api/v1/dapplogs/${params.appId}/last`
   return fetch(url, 'get')
 }
 
