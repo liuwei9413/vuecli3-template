@@ -70,6 +70,14 @@
             <div class="label">telegram地址：</div>
             <div class="value">{{dappInfo.telegram}}</div>
           </div>
+          <div class="item">
+            <div class="label">支持设备：</div>
+            <div class="value">{{dappInfo.device.join()}}</div>
+          </div>
+          <div class="item">
+            <div class="label">支持协议：</div>
+            <div class="value">{{dappInfo.protocol.join()}}</div>
+          </div>
         </div>
         <div class="list-item" v-if="dappInfoForLastHasShow">
           <div class="title">上一版本内容：</div>
@@ -122,6 +130,14 @@
           <div class="item">
             <div class="label">telegram地址：</div>
             <div class="value">{{dappInfoForLast.telegram}}</div>
+          </div>
+          <div class="item">
+            <div class="label">支持设备：</div>
+            <div class="value">{{dappInfo.device.join()}}</div>
+          </div>
+          <div class="item">
+            <div class="label">支持协议：</div>
+            <div class="value">{{dappInfo.protocol.join()}}</div>
           </div>
         </div>
       </div>
@@ -246,7 +262,6 @@ export default {
       this.loadingForLast = true
       getAuditDappDetailForLast(params)
         .then(res => {
-          if (!res.data) return
           let dappTypeValue = []
           this.loadingForLast = false
           this.dappInfoForLastHasShow = true

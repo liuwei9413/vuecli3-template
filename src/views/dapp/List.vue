@@ -29,6 +29,12 @@
             <el-checkbox v-for="(item, index) in initRecommendOptions" :label="item.label" :key="index">{{item.name}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
+        <el-form-item label="适配类型：">
+          <el-checkbox :indeterminate="isIndeterminateForDevice" v-model="checkAllModelForDevice" @change="handleCheckAllForDevice">全选</el-checkbox>
+          <el-checkbox-group v-model="checkedForDevice" @change="handleCheckedForDevice">
+            <el-checkbox v-for="(item, index) in initDeviceOptions" :label="item.label" :key="index">{{item.name}}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
       </el-form>
     </div>
     <div class="table-wrap mb30">
@@ -72,6 +78,14 @@
         <el-table-column
           label="状态"
           :formatter="statusFormat">
+        </el-table-column>
+        <el-table-column
+          label="支持设备"
+          :formatter="deviceFormat">
+        </el-table-column>
+        <el-table-column
+          label="支持协议"
+          :formatter="protocolFormat">
         </el-table-column>
         <el-table-column
           width="200"
@@ -138,6 +152,16 @@ const recommendOptions = [
     name: '否'
   }
 ]
+const deviceOptions = [
+  {
+    label: 1,
+    name: '网站'
+  },
+  {
+    label: 2,
+    name: '手机'
+  }
+]
 
 export default {
   components: {
@@ -169,6 +193,11 @@ export default {
       isIndeterminateForRecommend: false,
       checkAllModelForRecommend: true,
       checkedForRecommend: createNewArrByOneKey(recommendOptions, 'label'),
+      initDeviceOptions: deviceOptions,
+      initDeviceModel: createNewArrByOneKey(deviceOptions, 'label'),
+      isIndeterminateForDevice: false,
+      checkAllModelForDevice: true,
+      checkedForDevice: createNewArrByOneKey(deviceOptions, 'label'),
       page: 1,
       size: 10,
       total: 0,
@@ -204,6 +233,7 @@ export default {
         statusArr: JSON.stringify(this.checkedForStatus),
         kycArr: JSON.stringify(this.checkedForKyc),
         recommendArr: JSON.stringify(this.checkedForRecommend),
+        deviceArr: JSON.stringify(this.checkedForDevice),
         classifyIDs: JSON.stringify(this.checkedForClassify),
       }
       getDappList(params)
@@ -228,6 +258,12 @@ export default {
       } else {
         return row.status === 0 ? '上架中' : '已下架'
       }
+    },
+    deviceFormat (row) {
+      return row.device.join('')
+    },
+    protocolFormat (row) {
+      return row.protocol.join('')
     },
     recommendFormat (row) {
       return row.recommend === 1 ? '推荐' : '未推荐'
@@ -281,6 +317,19 @@ export default {
       let checkedCount = value.length
       this.checkAllModelForRecommend = checkedCount === this.initRecommendModel.length
       this.isIndeterminateForRecommend = checkedCount > 0 && checkedCount < this.initRecommendModel.length
+      this.page = 1
+      this.getListData()
+    },
+    handleCheckAllForDevice(val) {
+      this.checkedForDevice = val ? this.initDeviceModel : []
+      this.isIndeterminateForDevice = false
+      this.page = 1
+      this.getListData()
+    },
+    handleCheckedForDevice(value) {
+      let checkedCount = value.length
+      this.checkAllModelForDevice = checkedCount === this.initDeviceModel.length
+      this.isIndeterminateForDevice = checkedCount > 0 && checkedCount < this.initDeviceModel.length
       this.page = 1
       this.getListData()
     },
