@@ -112,7 +112,7 @@
             <el-table-column
               label="审核结果">
               <template slot-scope="scope">
-                <span>{{!scope.row.reason ? '成功' : '失败'}}</span>
+                <span>{{!!scope.row.status ? '成功' : '失败'}}</span>
               </template>
             </el-table-column>
             <el-table-column

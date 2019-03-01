@@ -170,7 +170,11 @@ export default {
       return dateFormat(row.createTime / 1000, 'yyyy-MM-dd hh:mm')
     },
     statusFormat (row) {
-      return row.status === 0 ? '上架中' : '已下架'
+      if (row.disabled === 'Y') {
+        return '禁用'
+      } else {
+        return row.status === 0 ? '上架中' : '已下架'
+      }
     },
     handleRecommendDappPopup (appId, recommend) {
       this.$confirm('是否确认将该应用从推荐列表中移除？', '提示', {

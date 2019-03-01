@@ -88,6 +88,9 @@ export default {
         })
         .catch(() => {
           this.loading = false
+          setTimeout(() => {
+            this.$router.push({path: '/dapp/check'})
+          }, 2000)
         })
     }
   }

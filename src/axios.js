@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'production') {
   Vue.prototype.baseURL = 'https://innovation-manage-test.vechaindev.com/'
   axios.defaults.baseURL = 'https://innovation-manage-test.vechaindev.com/'
 } else {
-  Vue.prototype.baseURL = 'http://192.168.10.47:3000/'
+  Vue.prototype.baseURL = 'http://192.168.50.170:3000/'
   // Vue.prototype.baseURL = 'https://innovation-manage-dev.vechaindev.com/'
   axios.defaults.baseURL = ''
 }
@@ -43,8 +43,9 @@ axios.interceptors.response.use(
         removeStorage('userInfo')
         location.href = '/#/login'
       } else if (response.data.code === 10015) {
+        Message.error('dapp不存在')
         // 不提示错误
-        console.log(response)
+        // console.log(response)
       } else {
         Message.error(response.data.message)
       }
