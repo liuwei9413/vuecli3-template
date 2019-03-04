@@ -16,7 +16,7 @@
         </div>
         <div class="item">
           <div class="label">开发者：</div>
-          <div class="value">{{dappInfo.appInfo.account}}</div>
+          <div class="value">{{dappInfo.appInfo.developerName}}</div>
         </div>
         <div class="item">
           <div class="label">体验链接：</div>
