@@ -19,7 +19,7 @@
               label="类别">
             </el-table-column>
             <el-table-column
-              prop="account"
+              prop="developerName"
               label="开发者">
             </el-table-column>
             <el-table-column
@@ -84,7 +84,7 @@
               label="类别">
             </el-table-column>
             <el-table-column
-              prop="account"
+              prop="developerName"
               label="开发者">
             </el-table-column>
             <el-table-column
