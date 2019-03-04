@@ -295,12 +295,23 @@ export default {
       })
     },
     handlePassPopup() {
-      this.$alert('是否确认审核通过？', '提示', {
+      this.$confirm('是否确认审核通过？', '提示', {
         confirmButtonText: '确定',
-        callback: () => {
-          this.handleAuditDapp({status: 1})
-        }
-      })
+        cancelButtonText: '取消',
+      }).then(() => {
+        this.handleAuditDapp({status: 1})
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消'
+        });
+      });
+      // this.$alert('是否确认审核通过？', '提示', {
+      //   confirmButtonText: '确定',
+      //   callback: () => {
+      //     this.handleAuditDapp({status: 1})
+      //   }
+      // })
     },
     handleAuditDapp(params) {
       const paramsUrl = {

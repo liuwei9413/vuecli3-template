@@ -12,7 +12,7 @@ module.exports = {
     proxy: {
       '/api': {
         // target: 'http://192.168.50.170:3000',
-        target: 'https://innovation-manage-dev.vechaindev.com',
+        target: 'https://innovation-manage-test.vechaindev.com',
         changeOrigin: true,
         // ws: true,
       }
