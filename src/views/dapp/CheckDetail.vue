@@ -13,7 +13,7 @@
           </div>
           <div>
             <span>{{dappInfo.version}}&nbsp;&nbsp;</span>
-            <span>by {{dappInfo.reason}}</span>
+            <span>by {{dappInfo.developerName}}</span>
           </div>
         </div>
       </div>
@@ -72,11 +72,11 @@
           </div>
           <div class="item">
             <div class="label">支持设备：</div>
-            <div class="value">{{dappInfo.device.join()}}</div>
+            <div class="value">{{deviceFormat}}</div>
           </div>
           <div class="item">
             <div class="label">支持协议：</div>
-            <div class="value">{{dappInfo.protocol.join()}}</div>
+            <div class="value">{{protocolFormat}}</div>
           </div>
         </div>
         <div class="list-item" v-if="dappInfoForLastHasShow">
@@ -133,11 +133,11 @@
           </div>
           <div class="item">
             <div class="label">支持设备：</div>
-            <div class="value">{{dappInfo.device.join()}}</div>
+            <div class="value">{{deviceFormatForLast}}</div>
           </div>
           <div class="item">
             <div class="label">支持协议：</div>
-            <div class="value">{{dappInfo.protocol.join()}}</div>
+            <div class="value">{{protocolFormatForLast}}</div>
           </div>
         </div>
       </div>
@@ -193,6 +193,10 @@ export default {
       loading: false,
       dappClassify: [],
       dappInfo: {},
+      deviceFormat: '',
+      protocolFormat: '',
+      deviceFormatForLast: '',
+      protocolFormatForLast: '',
       formatDappClassify: '',
       loadingForAudit: false,
       loadingForLast: false,
@@ -241,6 +245,8 @@ export default {
           let dappTypeValue = []
           this.loading = false
           this.dappInfo = res
+          this.deviceFormat = this.dappInfo.device.join(',')
+          this.protocolFormat = this.dappInfo.protocol.join(',')
           this.dappClassify.forEach((item) => {
             this.dappInfo.classifyIDs.forEach((item2) => {
               if (item2 === item.id) {
@@ -248,7 +254,7 @@ export default {
               }
             })
           })
-          this.formatDappClassify = dappTypeValue.join()
+          this.formatDappClassify = dappTypeValue.join(',')
         })
         .catch((error) => {
           this.loading = false
@@ -266,6 +272,8 @@ export default {
           this.loadingForLast = false
           this.dappInfoForLastHasShow = true
           this.dappInfoForLast = res
+          this.deviceFormatForLast = this.dappInfoForLast.device.join(',')
+          this.protocolFormatForLast = this.dappInfoForLast.protocol.join(',')
           this.dappClassify.forEach((item) => {
             this.dappInfoForLast.classifyIDs.forEach((item2) => {
               if (item2 === item.id) {
@@ -273,7 +281,7 @@ export default {
               }
             })
           })
-          this.formatDappClassifyForLast = dappTypeValue.join()
+          this.formatDappClassifyForLast = dappTypeValue.join(',')
         })
         .catch(() => {
           this.dappInfoForLastHasShow = false
