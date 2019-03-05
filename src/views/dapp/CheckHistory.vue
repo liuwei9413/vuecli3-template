@@ -37,7 +37,7 @@
             <span class="head-item">审核时间：{{item.auditTime | dateFormatFilter('yyyy-MM-dd hh:mm')}}</span>
             <span class="head-item">审核人：{{item.admin}}</span>
             <span class="head-item">审核结果：{{item.status === 1 ? '通过' : '不通过'}}</span>
-            <span class="head-item" v-show="!!item.reason">不通过原因：{{item.reason}}</span>
+            <span class="head-item" v-show="!!item.reasonCN">不通过原因：{{item.reasonCN}}</span>
           </div>
           <div class="box">
             <div class="label">版本更新内容：</div>
