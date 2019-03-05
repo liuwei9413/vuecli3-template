@@ -260,10 +260,10 @@ export default {
       }
     },
     deviceFormat (row) {
-      return row.device.join('')
+      return row.device.join(',')
     },
     protocolFormat (row) {
-      return row.protocol.join('')
+      return row.protocol.join(',')
     },
     recommendFormat (row) {
       return row.recommend === 1 ? '推荐' : '未推荐'
