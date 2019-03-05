@@ -116,7 +116,7 @@
               </template>
             </el-table-column>
             <el-table-column
-              prop="reason"
+              prop="reasonCN"
               label="失败原因">
             </el-table-column>
           </el-table>

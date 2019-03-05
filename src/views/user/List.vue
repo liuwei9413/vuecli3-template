@@ -18,8 +18,8 @@
           label="用户id">
         </el-table-column>
         <el-table-column
-          prop="nickname"
-          label="昵称">
+          prop="developerName"
+          label="开发者名称">
         </el-table-column>
         <el-table-column
           prop="email"
