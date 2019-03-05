@@ -91,7 +91,8 @@
           width="200"
           label="操作">
           <template slot-scope="scope">
-            <el-button type="primary" size="small"><router-link class="link" :to="`/dapp/detail?appid=${scope.row.appID}`">查看</router-link></el-button>
+            <!-- <el-button type="primary" size="small"><router-link class="link" :to="`/dapp/detail?appid=${scope.row.appID}`">查看</router-link></el-button> -->
+            <router-link class="link" :to="`/dapp/detail?appid=${scope.row.appID}`"><el-button type="primary" size="small">查看</el-button></router-link>
             <el-button @click.native.prevent="changeStatusPopup(scope.row.appID, scope.row.disabled)" type="primary" size="small">{{ scope.row.disabled === 'Y' ? '解禁' : '禁用' }}</el-button>
           </template>
         </el-table-column>
@@ -386,7 +387,11 @@ export default {
     margin-left: 30px;
   }
   .link {
+    display: inline-block;
     color: #FFF;
+    & + .el-button {
+      margin-left: 10px;
+    }
   }
 }
 
