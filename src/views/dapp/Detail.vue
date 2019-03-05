@@ -14,7 +14,7 @@
           </div>
           <div class="left-footer">
             <span>{{dappInfo.version}}&nbsp;&nbsp;</span>
-            <span>by {{dappInfo.account}}</span>
+            <span>by {{dappInfo.developerName}}</span>
           </div>
         </div>
         <div class="center">
