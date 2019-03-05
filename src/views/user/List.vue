@@ -44,7 +44,7 @@
         <el-table-column
           label="操作">
           <template slot-scope="scope">
-            <el-button @click.native.prevent="handleDeletePopup(scope.row.uid, scope.row.disabled)" type="primary" size="small">{{ scope.row.disabled === 'Y' ? '启封' : '封号' }}</el-button>
+            <el-button @click.native.prevent="handleDeletePopup(scope.row.uid, scope.row.disabled)" type="primary" size="small" v-if="scope.row.isWriteOff !== 'Y'">{{ scope.row.disabled === 'Y' ? '启封' : '封号' }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -111,7 +111,11 @@ export default {
       this.getList()
     },
     accountStatus (row) {
-      return row.disabled === 'Y' ? '已封号' : '正常'
+      if (row.isWriteOff === 'Y') {
+        return '注销'
+      } else {
+        return row.disabled === 'Y' ? '已封号' : '正常'
+      }
     },
     countryAndCity (row) {
       if (!row.state) {
