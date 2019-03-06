@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg' || 'image/png';
+      const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
       const isLt5M = file.size / 1024 / 1024 >= 1 && file.size / 1024 / 1024 <= 5;
 
       if (!isJPG) {
