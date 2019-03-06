@@ -81,7 +81,7 @@ export default {
   },
   methods: {
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg' || 'image/png';
+      const isJPG = file.type === 'image/jpeg' || file.type === 'image/png';
       const isLt2M = file.size / 1024 / 1024 < 2;
 
       if (!isJPG) {
