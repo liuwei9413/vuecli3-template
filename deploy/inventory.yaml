@@ -11,6 +11,6 @@ test:
       ansible_ssh_port: 56000
 production:
   hosts:
-    thor-ali-hk-exp-web-01:
-      ansible_ssh_host: thor-ali-hk-exp-web-01
+    innovation-hk-prod:
+      ansible_ssh_host: 47.52.157.163
       ansible_ssh_port: 56000
