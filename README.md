@@ -1,4 +1,4 @@
-# innovation-lab
+# VechainWorld
 
 ## Description
 Background management platform for innovation lab

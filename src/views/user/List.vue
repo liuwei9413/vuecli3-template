@@ -135,7 +135,7 @@ export default {
       this.deleteId = id
       this.disabled = disabled === 'Y' ? 'N' : 'Y'
       if (disabled === 'N') {
-        this.$confirm('封号操作将导致该用户无法使用innovationLab，但不会注销该用户，是否继续操作？', '提示', {
+        this.$confirm('封号操作将导致该用户无法使用VechainWorld，但不会注销该用户，是否继续操作？', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
