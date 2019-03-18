@@ -1,6 +1,6 @@
 <template>
   <header class="clearfix">
-    <div class="title">innovation lab</div>
+    <div class="title">VechainWorld</div>
     <div class="welcome">
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
