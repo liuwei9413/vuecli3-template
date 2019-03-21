@@ -1,6 +1,6 @@
 <template>
   <header class="clearfix">
-    <div class="title">VechainWorld</div>
+    <div class="title">VeChainWorld</div>
     <div class="welcome">
       <el-dropdown trigger="click">
         <span class="el-dropdown-link">
@@ -66,7 +66,7 @@ header {
   background-color: $bgcolor_header;
   .title {
     float: left;
-    width: 200px;
+    width: 260px;
     height: 60px;
     line-height: 60px;
     text-align: center;

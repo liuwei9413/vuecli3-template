@@ -44,14 +44,14 @@ export default {
   z-index: 1;
   top: 60px;
   left: 0;
-  width: 200px;
+  width: 260px;
   height: 100%;
   overflow: auto;
   background-color: #FFF;
   border-right: 1px solid #f2f2f2;
 }
 .main-wrap {
-  margin: 60px 0 0 200px;
+  margin: 60px 0 0 260px;
   padding: 20px;
   // background: #f2f2f2;
   height: auto;

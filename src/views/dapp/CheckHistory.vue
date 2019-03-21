@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-breadcrumb class="breadcrumb mb30" separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/dapp/check' }">Dapp审核</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/dapp/check' }">Blockchain Application审核</el-breadcrumb-item>
       <el-breadcrumb-item>历史审核记录</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="content" v-loading="loading">

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-breadcrumb class="breadcrumb mb30" separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/dapp/check' }">Dapp审核</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/dapp/check' }">Blockchain Application审核</el-breadcrumb-item>
       <el-breadcrumb-item>提交详情</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="content" v-loading="loading || loadingForAudit">
@@ -33,6 +33,10 @@
             <div class="value">
               <a :href="dappInfo.tryAddress" target="_blank">{{dappInfo.tryAddress}}</a>
             </div>
+            <div class="value value-developer" v-if="dappInfo.sameTryAddressAccounts.length > 0">
+              <p class="p">链接已被占用</p>
+              <p class="p" v-for="(item, index) in dappInfo.sameTryAddressAccounts" :key="index"><span>开发者：</span><span>{{`${item.developerName}（${item.email}）`}}</span></p>
+            </div>
           </div>
           <div class="item">
             <div class="label">产品logo：</div>
@@ -41,7 +45,7 @@
           <div class="item" v-for="(item) in dappInfo.languages" :key="item.language + 1">
             <div class="label">产品UI图<span>（{{item.language === 'EN' ? '英' : '中'}}）</span>：</div>
             <div class="value clearfix">
-              <div class="ui" v-for="(item2, index2) in item.introducePics" :key="index2" :style="`backgroundImage: url(${item2})`"></div>
+              <div class="ui" v-for="(item2, index2) in item.introducePics" :key="index2" :style="`backgroundImage: url(${item2})`" @click="openImg(item2)"></div>
             </div>
           </div>
           <div class="item">
@@ -102,7 +106,7 @@
           <div class="item" v-for="(item) in dappInfoForLast.languages" :key="item.language + 10">
             <div class="label">产品UI图<span>（{{item.language === 'EN' ? '英' : '中'}}）</span>：</div>
             <div class="value clearfix">
-              <div class="ui" v-for="(item2, index2) in item.introducePics" :key="index2" :style="`backgroundImage: url(${item2})`"></div>
+              <div class="ui" v-for="(item2, index2) in item.introducePics" :key="index2" :style="`backgroundImage: url(${item2})`" @click="openImg(item2)"></div>
             </div>
           </div>
           <div class="item">
@@ -172,6 +176,10 @@
         <el-button type="primary" @click="handleNoPass">确 定</el-button>
       </div>
     </el-dialog>
+    <el-dialog :visible.sync="imgVisible" :show-close="false" class="img-dialog">
+      <div class="img-content" :style="`backgroundImage: url(${dialogImgUrl})`">
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -204,6 +212,8 @@ export default {
       dappInfoForLast: [],
       formatDappClassifyForLast: '',
       dialogFormVisible: false,
+      imgVisible: false,
+      dialogImgUrl: '',
       auditForm: {
         reasonCN: '',
         reasonEN: '',
@@ -270,6 +280,7 @@ export default {
         .then(res => {
           let dappTypeValue = []
           this.loadingForLast = false
+          if (!res) return
           this.dappInfoForLastHasShow = true
           this.dappInfoForLast = res
           this.deviceFormatForLast = this.dappInfoForLast.device.join(',')
@@ -287,6 +298,13 @@ export default {
           this.dappInfoForLastHasShow = false
           this.loadingForLast = false
         })
+    },
+    openImg(url) {
+      console.log(url)
+      if (url) {
+        this.imgVisible = true
+        this.dialogImgUrl = url
+      }
     },
     handleNoPass () {
       let params = {
@@ -347,7 +365,6 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .content {
   .dapp-head {
@@ -403,6 +420,14 @@ export default {
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
+            cursor: pointer;
+          }
+        }
+        .value-developer {
+          margin-top: 10px;
+          color: #f56c6c;
+          .p {
+            line-height: 20px;
           }
         }
         .logo {

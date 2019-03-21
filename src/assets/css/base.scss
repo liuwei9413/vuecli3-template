@@ -108,3 +108,24 @@ a {
 .el-tooltip__popper {
   width: 800px;
 }
+.img-dialog {
+  .el-dialog {
+    width: 600px;
+    height: 600px;
+    .el-dialog__header {
+      display: none!important;
+    }
+    .el-dialog__body {
+      padding: 20px;
+      width: 100%;
+      height: 100%;
+      .img-content {
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+      }
+    }
+  }
+}

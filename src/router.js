@@ -9,19 +9,19 @@ const dappRoutes = {
   path: '/dapp',
   redirect: '/dapp/list',
   component: resolve => require(['@/views/dapp/Index'], resolve),
-  meta: { title: 'Dapp管理' },
+  meta: { title: 'Blockchain Application管理' },
   children: [
     {
       name: 'dappCheck',
       path: '/dapp/check',
       component: resolve => require(['@/views/dapp/Check'], resolve),
-      meta: { title: 'Dapp审核' }
+      meta: { title: 'Blockchain Application审核' }
     },
     {
       name: 'dappCheckDetail',
       path: '/dapp/check/detail',
       component: resolve => require(['@/views/dapp/CheckDetail'], resolve),
-      meta: { title: 'Dapp审核详情' },
+      meta: { title: 'Blockchain Application审核详情' },
       hidden: true      
     },
     {
@@ -35,20 +35,20 @@ const dappRoutes = {
       name: 'dappList',
       path: '/dapp/list',
       component: resolve => require(['@/views/dapp/List'], resolve),
-      meta: { title: 'Dapp列表' }
+      meta: { title: 'Blockchain Application列表' }
     },
     {
       name: 'dappDetail',
       path: '/dapp/detail',
       component: resolve => require(['@/views/dapp/Detail'], resolve),
-      meta: { title: 'Dapp详情' },
+      meta: { title: 'Blockchain Application详情' },
       hidden: true
     },
     {
       name: 'dappType',
       path: '/dapp/type',
       component: resolve => require(['@/views/dapp/Type'], resolve),
-      meta: { title: 'Dapp类型管理' }
+      meta: { title: 'Blockchain Application类型管理' }
     },
     {
       name: 'addDappType',
@@ -68,7 +68,7 @@ const dappRoutes = {
       name: 'recommendDapp',
       path: '/dapp/recommend',
       component: resolve => require(['@/views/dapp/Recommend'], resolve),
-      meta: { title: 'Dapp推荐配置' },
+      meta: { title: 'Blockchain Application推荐配置' },
     }
   ]
 }
