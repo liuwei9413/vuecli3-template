@@ -1,7 +1,7 @@
 <template>
   <div class="dapp-type">
     <el-breadcrumb class="breadcrumb" separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item>Dapp类型管理</el-breadcrumb-item>
+      <el-breadcrumb-item>Blockchain Application类型管理</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="clearfix">
       <router-link to="/dapp/type/add">
