@@ -33,7 +33,7 @@
             <div class="value">
               <a :href="dappInfo.tryAddress" target="_blank">{{dappInfo.tryAddress}}</a>
             </div>
-            <div class="value value-developer" v-if="dappInfo.sameTryAddressAccounts.length > 0">
+            <div class="value value-developer" v-show="sameTryAddressAccountsLength > 0">
               <p class="p">链接已被占用</p>
               <p class="p" v-for="(item, index) in dappInfo.sameTryAddressAccounts" :key="index"><span>开发者：</span><span>{{`${item.developerName}（${item.email}）`}}</span></p>
             </div>
@@ -201,6 +201,7 @@ export default {
       loading: false,
       dappClassify: [],
       dappInfo: {},
+      sameTryAddressAccountsLength: 0,
       deviceFormat: '',
       protocolFormat: '',
       deviceFormatForLast: '',
@@ -255,6 +256,7 @@ export default {
           let dappTypeValue = []
           this.loading = false
           this.dappInfo = res
+          this.sameTryAddressAccountsLength = this.dappInfo.sameTryAddressAccounts.length
           this.deviceFormat = this.dappInfo.device.join(',')
           this.protocolFormat = this.dappInfo.protocol.join(',')
           this.dappClassify.forEach((item) => {
