@@ -42,7 +42,7 @@ axios.interceptors.response.use(
         removeStorage('userInfo')
         location.href = '/#/login'
       } else if (response.data.code === 10015) {
-        Message.error('dapp不存在')
+        Message.error('Blockchain Application不存在')
         // 不提示错误
         // console.log(response)
       } else {

@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/dapp/type' }">Dapp类型管理</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/dapp/type' }">Blockchain Application类型管理</el-breadcrumb-item>
       <el-breadcrumb-item>新增类型</el-breadcrumb-item>
     </el-breadcrumb>
     <el-form class="form-box" :model="signin" :rules="rules" ref="signin" label-width="150px">

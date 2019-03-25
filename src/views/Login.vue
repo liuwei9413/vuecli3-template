@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form class="login-form" :model="signin" :rules="rules" ref="signin">
       <div class="title-container">
-        <h3 class="title">VechainWorld 管理平台</h3>
+        <h3 class="title">VeChainWorld 管理平台</h3>
       </div>
       <el-form-item prop="username">
         <el-input v-model="signin.username" placeholder="请输入邮箱"></el-input>
