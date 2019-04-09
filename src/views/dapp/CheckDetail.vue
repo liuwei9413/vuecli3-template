@@ -163,11 +163,11 @@
       </div>
     </div>
     <el-dialog title="输入不通过的原因" :visible.sync="dialogFormVisible">
-      <el-form :model="auditForm" :rules="rules" ref="auditForm">
-        <el-form-item label="中文原因" label-width="120px" prop="reasonCN">
+      <el-form :model="auditForm" ref="auditForm">
+        <el-form-item label="中文原因" label-width="120px">
           <el-input v-model.trim="auditForm.reasonCN" autocomplete="off"></el-input>
         </el-form-item>
-        <el-form-item label="英文原因" label-width="120px" prop="reasonEN">
+        <el-form-item label="英文原因" label-width="120px">
           <el-input v-model.trim="auditForm.reasonEN" autocomplete="off"></el-input>
         </el-form-item>
       </el-form>
@@ -219,14 +219,14 @@ export default {
         reasonCN: '',
         reasonEN: '',
       },
-      rules: {
-        reasonCN: [
-          { required: true, message: '请输入中文版原因', trigger: 'blur' }
-        ],
-        reasonEN: [
-          { required: true, message: '请输入英文版原因', trigger: 'blur' }
-        ],
-      },
+      // rules: {
+      //   reasonCN: [
+      //     { required: true, message: '请输入中文版原因', trigger: 'blur' }
+      //   ],
+      //   reasonEN: [
+      //     { required: true, message: '请输入英文版原因', trigger: 'blur' }
+      //   ],
+      // },
     }
   },
   computed: {
@@ -314,13 +314,18 @@ export default {
         reasonCN: this.auditForm.reasonCN,
         reasonEN: this.auditForm.reasonEN
       }
-      this.$refs['auditForm'].validate((valid) => {
-        if (valid) {
-          this.handleAuditDapp(params)
-        } else {
-          return false
-        }
-      })
+      if (this.auditForm.reasonCN || this.auditForm.reasonEN) {
+        this.handleAuditDapp(params)
+      } else {
+        this.$message.error('请至少填写一个语言的原因')
+      }
+      // this.$refs['auditForm'].validate((valid) => {
+      //   if (valid) {
+      //     this.handleAuditDapp(params)
+      //   } else {
+      //     return false
+      //   }
+      // })
     },
     handlePassPopup() {
       this.$confirm('是否确认审核通过？', '提示', {
@@ -343,12 +348,14 @@ export default {
     },
     handleAuditDapp(params) {
       const paramsUrl = {
-        id: this.id
+        id: this.id,
+        updateTime: this.dappInfo.updateTime
       }
       this.loadingForAudit = true
       auditDapp(paramsUrl, params)
         .then(() => {
           this.loadingForAudit = false
+          this.dialogFormVisible = false
           this.handleAction()
         })
         .catch(() => {
