@@ -133,7 +133,7 @@ export const getAuditDappDetailForLast = function (params) {
 }
 
 export const auditDapp = function (urlParams, params) {
-  let url = `/api/v1/audits/${urlParams.id}/status`
+  let url = `/api/v1/audits/${urlParams.id}/status?updateTime=${urlParams.updateTime}`
   return fetch(url, 'post', params)
 }
 
