@@ -18,7 +18,7 @@
           :before-upload="beforeAvatarUpload">
           <img v-if="signin.pic" :src="signin.pic" class="avatar">
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-          <div slot="tip" class="el-upload__tip">支持扩展名：.png .jpg.&nbsp;&nbsp;&nbsp;&nbsp;尺寸：1680*458&nbsp;&nbsp;&nbsp;&nbsp;大小1-5M</div>
+          <div slot="tip" class="el-upload__tip">支持扩展名：.png .jpg.&nbsp;&nbsp;&nbsp;&nbsp;尺寸：1680*458&nbsp;&nbsp;&nbsp;&nbsp;5M以内</div>
         </el-upload>
       </el-form-item>
       <el-form-item label="跳转链接：" prop="url">
