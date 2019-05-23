@@ -31,20 +31,15 @@ axios.interceptors.response.use(
   res => {
     let result = res.data
     if (result && result.code === 1) {
-      return Promise.resolve(result)
+      return Promise.resolve(res)
     }
   },
   error => {
     const response = error.response
     if (response && Object.prototype.toString.call(response.data) === '[object Object]') {
-      // token非法 跳到登录页
       if (response.data.code === 10002) {
         removeStorage('userInfo')
         location.href = '/#/login'
-      } else if (response.data.code === 10015) {
-        Message.error('Blockchain Application不存在')
-        // 不提示错误
-        // console.log(response)
       } else {
         Message.error(response.data.message)
       }

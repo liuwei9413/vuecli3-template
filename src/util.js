@@ -1,10 +1,24 @@
-// import Cookies from 'js-cookie'
+import md5 from 'md5'
+import base64 from 'base64-js'
+import { TextEncoder, TextDecoder } from 'text-encoding'
 
-// const TokenKey = 'Access-Token'
+function strToBase64(str) {
+  let uint8array = new TextEncoder('utf-8').encode(str)
+  return base64.fromByteArray(uint8array)
+}
+
+function fromBase64(base64str) {
+  let array = base64.toByteArray(base64str)
+  return new TextDecoder('utf-8').decode(array)
+}
+
+export const encrypt = function(str) {
+  return md5(str)
+}
 
 export const setStorage = function(key, obj) {
   let json = JSON.stringify(obj)
-  window.localStorage.setItem(key, json)
+  window.localStorage.setItem(key, strToBase64(json))
 }
 
 export const getStorage = function(key) {
@@ -12,7 +26,8 @@ export const getStorage = function(key) {
   if (!str) {
     return null
   }
-  return JSON.parse(str)
+  const jsonStr = fromBase64(str)
+  return JSON.parse(jsonStr)
 }
 
 export const clear = function() {
@@ -21,37 +36,4 @@ export const clear = function() {
 
 export const removeStorage = function(key) {
   window.localStorage.removeItem(key)
-}
-
-export const dateFormat = function (timestamp, format, isUtcTime) {
-  var newDate = new Date()
-  timestamp = isUtcTime ? (timestamp - 8 * 3600) : timestamp
-  newDate.setTime(timestamp * 1000)
-  var date = {
-    'M+': newDate.getMonth() + 1,
-    'd+': newDate.getDate(),
-    'h+': newDate.getHours(),
-    'm+': newDate.getMinutes(),
-    's+': newDate.getSeconds(),
-    'q+': Math.floor((newDate.getMonth() + 3) / 3),
-    'S+': newDate.getMilliseconds()
-  }
-  if (/(y+)/i.test(format)) {
-    format = format.replace(RegExp.$1, (newDate.getFullYear() + '').substr(4 - RegExp.$1.length))
-  }
-  for (var k in date) {
-    if (new RegExp('(' + k + ')').test(format)) {
-      format = format.replace(RegExp.$1, RegExp.$1.length === 1
-        ? date[k] : ('00' + date[k]).substr(('' + date[k]).length))
-    }
-  }
-  return format
-}
-
-export const createNewArrByOneKey = function(arr, key) {
-  let result = []
-  arr.forEach((item) => {
-    result.push(item[key])
-  })
-  return result
 }

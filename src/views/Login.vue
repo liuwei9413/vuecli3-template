@@ -2,7 +2,7 @@
   <div class="login-container">
     <el-form class="login-form" :model="signin" :rules="rules" ref="signin">
       <div class="title-container">
-        <h3 class="title">VeChainWorld 管理平台</h3>
+        <h3 class="title">H S M</h3>
       </div>
       <el-form-item prop="username">
         <el-input v-model="signin.username" placeholder="请输入邮箱"></el-input>
@@ -14,12 +14,14 @@
         <el-button type="primary" style="width:100%;" @click="submitForm('signin')" :loading="loading">登录</el-button>
       </el-form-item>
     </el-form>
+    <el-input v-model="message"></el-input>
   </div>
 </template>
 
 <script>
 import { setStorage } from '@/util'
 import { login } from '@/service'
+import { mapActions, mapState, mapGetters } from 'vuex'
 
 export default {
   name: 'Login',
@@ -27,6 +29,7 @@ export default {
   },
   data () {
     return {
+      testData: '1',
       signin: {
         username: '',
         password: '',
@@ -42,30 +45,66 @@ export default {
       loading: false
     }
   },
+  computed: {
+    ...mapState({
+      message2: state => state.obj.message2
+    }),
+    message: {
+      get () {
+        return this.$store.state.obj.message
+      },
+      set (value) {
+        this.$store.commit('updateMessage', value)
+      }
+    },
+    accountInfo () {
+      return this.$store.state.accountInfo
+    },
+    ...mapState({
+      aliasAccount: state => state.accountInfo
+    }),
+    ...mapGetters({
+      doubleAccount: 'doubleAccount'
+    })
+  },
   created () {
   },
   mounted  () {
+    (async () => {
+      console.log(this.accountInfo)
+
+      console.log('mapState:' + JSON.stringify(this.aliasAccount))
+      console.log('mapGetters:' + JSON.stringify(this.doubleAccount))
+
+      // await this.$store.dispatch('accountInfoAction')
+      await this.accountInfoAction({ preload: true })
+      console.log(this.accountInfo)
+      console.log('mapState:' + JSON.stringify(this.aliasAccount))
+      console.log('mapGetters:' + JSON.stringify(this.doubleAccount))
+    })()
   },
   methods: {
+    ...mapActions(['accountInfoAction']),
+    handleUpdateMessage (e) {
+      debugger
+      this.$store.commit('updateMessage2', e.target.value)
+    },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.loading = true
-          login(this.signin)
-            .then((res) => {
-              this.loading = false
-              // console.log(res)
-              setStorage('userInfo', res)
-              this.$router.push({ path: '/' })
-            })
-            .catch((error) => {
-              this.loading = false
-              console.log(error)
-            })
-        } else {
-          console.log('error submit!!')
-          return false
-        }
+        if ( !valid ) return false
+
+        this.loading = true
+        login(this.signin)
+          .then((res) => {
+            this.loading = false
+            // console.log(res)
+            setStorage('userInfo', res)
+            this.$router.push({ path: '/' })
+          })
+          .catch((error) => {
+            this.loading = false
+            console.log(error)
+          })
       })
     }
   }
@@ -109,6 +148,7 @@ $light_gray:#eee;
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
+
 .login-container {
   position: fixed;
   height: 100%;

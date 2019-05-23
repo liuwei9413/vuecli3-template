@@ -1,5 +1,5 @@
 {
-  "name": "innovation-lab-console-frontier",
+  "name": "hsm-portal-frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -9,11 +9,14 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "element-ui": "^2.4.11",
+    "element-ui": "^2.8.2",
     "lodash": "^4.17.11",
     "normalize.css": "^8.0.1",
-    "sortablejs": "^1.8.0-rc1",
+    "md5": "^2.2.1",
+    "text-encoding": "^0.7.0",
+    "base64-js": "^1.3.0",
     "vue": "^2.5.17",
+    "vue-i18n": "^8.5.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
