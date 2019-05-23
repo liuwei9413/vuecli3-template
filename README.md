@@ -1,7 +1,7 @@
-# VechainWorld
+# Vue-cli template
 
 ## Description
-Background management platform for innovation lab
+A vue-cli3.x template
 
 ## Project setup
 ```
