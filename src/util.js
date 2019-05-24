@@ -17,8 +17,8 @@ export const encrypt = function(str) {
 }
 
 export const setStorage = function(key, obj) {
-  let json = JSON.stringify(obj)
-  window.localStorage.setItem(key, strToBase64(json))
+  let jsonStr = JSON.stringify(obj)
+  window.localStorage.setItem(key, strToBase64(jsonStr))
 }
 
 export const getStorage = function(key) {
@@ -30,10 +30,39 @@ export const getStorage = function(key) {
   return JSON.parse(jsonStr)
 }
 
+export const removeStorage = function(key) {
+  window.localStorage.removeItem(key)
+}
+
 export const clear = function() {
   window.localStorage.clear()
 }
 
-export const removeStorage = function(key) {
-  window.localStorage.removeItem(key)
+export const setSessionStorage = function(key, obj) {
+  let json = JSON.stringify(obj)
+  window.sessionStorage.setItem(key, strToBase64(json))
+}
+
+export const getSessionStorage = function(key) {
+  const str = window.sessionStorage.getItem(key)
+  if (!str) {
+    return null
+  }
+  const jsonStr = fromBase64(str)
+  return JSON.parse(jsonStr)
+}
+
+export const removeSessionStorage = function(key) {
+  window.sessionStorage.removeItem(key)
+}
+
+export const getBrowserLang = function() {
+  let browserLang = navigator.language ? navigator.language : navigator.browserLanguage
+  let defaultBrowserLang = ''
+  if (browserLang.toLowerCase() === 'cn' || browserLang.toLowerCase() === 'zh' || browserLang.toLowerCase() === 'zh-cn') {
+    defaultBrowserLang = 'zh-CN'
+  } else {
+    defaultBrowserLang = 'en-US'
+  }
+  return defaultBrowserLang
 }

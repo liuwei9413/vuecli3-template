@@ -1,12 +1,4 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-// import {
-//   fetchAccountInfo,
-// } from '@/service.js'
-
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default {
   state: {
     accountInfo: {
       a: 2
@@ -54,4 +46,4 @@ export default new Vuex.Store({
     //   commit('gotOtherData', await getOtherData())
     // }
   }
-})
+}

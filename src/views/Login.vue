@@ -5,7 +5,7 @@
         <h3 class="title">H S M</h3>
       </div>
       <el-form-item prop="username">
-        <el-input v-model="signin.username" placeholder="请输入邮箱"></el-input>
+        <el-input v-model="signin.username" :placeholder="this.$t('login.p1')"></el-input>
       </el-form-item>
       <el-form-item prop="password">
         <el-input v-model="signin.password" type="password" placeholder="请输入密码" @keyup.native.enter="submitForm('signin')"></el-input>
@@ -15,6 +15,10 @@
       </el-form-item>
     </el-form>
     <el-input v-model="message"></el-input>
+
+    <div class="lang-wrap">
+      <v-lang></v-lang>
+    </div>
   </div>
 </template>
 
@@ -22,10 +26,12 @@
 import { setStorage } from '@/util'
 import { login } from '@/service'
 import { mapActions, mapState, mapGetters } from 'vuex'
+import vLang from '@/views/component/Lang.vue'
 
 export default {
   name: 'Login',
   components: {
+    vLang
   },
   data () {
     return {
@@ -47,21 +53,21 @@ export default {
   },
   computed: {
     ...mapState({
-      message2: state => state.obj.message2
+      message2: state => state.user.obj.message2
     }),
     message: {
       get () {
-        return this.$store.state.obj.message
+        return this.$store.state.user.obj.message
       },
       set (value) {
         this.$store.commit('updateMessage', value)
       }
     },
     accountInfo () {
-      return this.$store.state.accountInfo
+      return this.$store.state.user.accountInfo
     },
     ...mapState({
-      aliasAccount: state => state.accountInfo
+      aliasAccount: state => state.user.accountInfo
     }),
     ...mapGetters({
       doubleAccount: 'doubleAccount'
@@ -84,10 +90,13 @@ export default {
     })()
   },
   methods: {
-    ...mapActions(['accountInfoAction']),
+    ...mapActions({
+      accountInfoAction: 'accountInfoAction'
+    }),
+    // ...mapActions(['accountInfoAction']),
     handleUpdateMessage (e) {
       debugger
-      this.$store.commit('updateMessage2', e.target.value)
+      this.$store.user.commit('updateMessage2', e.target.value)
     },
     submitForm(formName) {
       this.$refs[formName].validate((valid) => {
