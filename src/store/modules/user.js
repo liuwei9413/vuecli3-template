@@ -1,5 +1,11 @@
 export default {
   state: {
+    role: '',
+    addRoutes: {
+      admin: [
+
+      ]
+    },
     accountInfo: {
       a: 2
     },
