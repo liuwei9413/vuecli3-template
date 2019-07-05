@@ -1,4 +1,5 @@
 # Vue-cli template
+Vue template
 
 ## Description
 A vue-cli3.x template
